@@ -55,7 +55,7 @@ userRouter.post("/login",async(req,res)=>{
                     const refreshToken=jwt.sign({userId:checkUserIsExist._id,userName:checkUserIsExist.userName}, REFRESH_KEY, {expiresIn:"1h"});
                     res.cookie("accessToken",accessToken,cookieOptions);
                     res.cookie("refreshToken",refreshToken,cookieOptions);
-                    res.status(200).send({msg:"user login successfully.", accessToken, refreshToken});
+                    res.status(200).send({msg:"user login successfully.",userName:checkUserIsExist.userName, accessToken, refreshToken});
                 }
             })
         }
