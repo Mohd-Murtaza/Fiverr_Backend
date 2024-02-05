@@ -38,7 +38,7 @@ userRouter.post("/signup", async(req,res)=>{
 userRouter.post("/login",async(req,res)=>{
     try {
         const {email,password}=req.body;
-        const cookieOptions={httpOnly:true,secure:true,domain:"fiverr-clone-murtaza.netlify.app"}
+        const cookieOptions={httpOnly:true,secure:true,sameSite:"none"}
         const checkUserIsExist=await UserModel.findOne({email});
         console.log(checkUserIsExist)
         if(!checkUserIsExist){
