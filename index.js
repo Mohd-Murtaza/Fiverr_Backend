@@ -10,8 +10,18 @@ const PORT=process.env.PORT
 const app=express();
 app.use(express.json());
 app.use(cookieParser());
+const allowedOrigins= ["http://localhost:5173","https://fiverrbackend-production.up.railway.app","https://fiverr-clone-murtaza.netlify.app"]
 app.use(cors({
-    origin:["http://localhost:5173","https://fullstack-notes-app-ja6v.onrender.com","https://crud-app0101.netlify.app"],
+    origin:(origin,callback)=>{
+        console.log("Origin is", origin);
+        if(allowedOrigins.indexOf(origin)!==-1||!origin){
+            console.log("Origin allowed");
+            callback(null,true)
+        }
+        else{
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     credentials:true
 }));
 app.get("/home",(req,res)=>{
