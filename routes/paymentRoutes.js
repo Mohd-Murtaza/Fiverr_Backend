@@ -38,7 +38,7 @@ paymentRouter.post("/payment-verification", async (req, res) => {
         res.redirect(`http://localhost:5173/success?payment_id=${razorpay_order_id}`)
         return
     }else{
-        res.redirect("http://localhost:5173/")
+        res.redirect("https://fiverr-clone-murtaza.netlify.app/")
         return
     }
 });
