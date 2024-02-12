@@ -25,6 +25,7 @@ userRouter.post("/signup", async(req,res)=>{
                     const newUser=new UserModel({userName,email,password:hash});
                     await newUser.save();
                     res.status(200).send({msg:"user register successfully",newUser});
+                    //when some one registering then login route also hit at a time
                 }else{
                     res.status(400).send({msg:"error while hashing password!",err:err.message})
                 }

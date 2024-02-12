@@ -41,6 +41,7 @@ const auth = async(req, res, next) => {
         });
         
     } catch (error) {
+        console.log(error)
         res.status(400).json({ msg: "login again!", error: error.message });
     }
 };

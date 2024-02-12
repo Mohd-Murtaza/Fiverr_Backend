@@ -1,21 +1,17 @@
 require("dotenv").config();
-const passport =require('passport')
 const cors = require("cors")
+const morgan=require("morgan")
 const express=require("express");
 const cookieParser = require("cookie-parser");
-const session = require("express-session");
 const { connection } = require("./db");
 const { userRouter } = require("./routes/userRoutes");
-// const { notesRouter } = require("./routes/notesRoutes");
-const { auth } = require("./middlewares/authMiddleware");
+const { productRouter } = require("./routes/productRoutes");
+const { paymentRouter } = require("./routes/paymentRoutes");
 const PORT=process.env.PORT
 const app=express();
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(session({ secret: 'your_secret_key', resave: true, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
 
 const allowedOrigins= ["http://localhost:5173","https://fiverrbackend-production.up.railway.app","https://fiverr-clone-murtaza.netlify.app"]
 app.use(cors({
@@ -31,22 +27,13 @@ app.use(cors({
     },
     credentials:true
 }));
-app.get("/home",(req,res)=>{
-    res.status(200).send("this is a home page");
-})
+app.use(morgan("dev"))
+
+
+
 app.use("/user", userRouter);
-// app.use("/notes", auth, notesRouter)
-
-
-app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile'] }));
-
-app.get('/auth/google/callback', 
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
-  });
+app.use("/product", productRouter);
+app.use("/payment", paymentRouter);
 
 
 app.use((req,res)=>{
