@@ -6,7 +6,8 @@ const userSchema=mongoose.Schema({
     userProfile:String,
     mobile:Number,
     shippingDetails:String,
-    gender:String
+    gender:String,
+    otp:String
 },{versionKey:false});
 const UserModel=mongoose.model("user", userSchema);
 module.exports={UserModel};
