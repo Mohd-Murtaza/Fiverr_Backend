@@ -13,7 +13,7 @@ const app=express();
 app.use(express.json());
 app.use(cookieParser());
 
-const allowedOrigins= ["http://localhost:5173","https://fiverrbackend-production.up.railway.app","https://fiverr-clone-murtaza.netlify.app"]
+const allowedOrigins= ["http://localhost:5173","https://fiverr-backend-pied.vercel.app","https://fiverr-clone-murtaza.netlify.app"]
 app.use(cors({
     origin:(origin,callback)=>{
         console.log("Origin is", origin);
