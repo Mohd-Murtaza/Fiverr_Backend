@@ -29,7 +29,6 @@ userRouter.post("/signup", async (req, res) => {
           const newUser = new UserModel({ userName, email, password: hash });
           await newUser.save();
           res.status(200).send({ msg: "user register successfully", newUser });
-          //when some one registering then login route also hit at a time
         } else {
           res
             .status(400)
@@ -44,7 +43,7 @@ userRouter.post("/signup", async (req, res) => {
 userRouter.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    const cookieOptions = { httpOnly: true, secure: true, sameSite: "none" };
+    const cookieOptions = { httpOnly: true, secure: true, sameSite: "none"};
     const checkUserIsExist = await UserModel.findOne({ email });
     console.log(checkUserIsExist);
     if (!checkUserIsExist) {
@@ -231,16 +230,18 @@ userRouter.post("/logout", async (req, res) => {
   console.log({ accessToken: accessToken });
   try {
     const checkTokensIsExists = await BlacklistModel.findOne({ accessToken });
+    console.log(checkTokensIsExists, "checking token is exist while logout...")
     if (checkTokensIsExists) {
       res.status(400).send({ msg: "you already logout!" });
     } else {
       const blacklistTokens = new BlacklistModel({ accessToken });
       await blacklistTokens.save();
+      res.clearCookie('accessToken', { httpOnly: true, sameSite: 'strict' });
       res.status(200).send({ msg: "logout successfull", blacklistTokens });
     }
   } catch (error) {
     console.log(error);
-    res.status(400).send({ msg: "error while logout!", error: error });
+    res.status(400).send({ msg: "error while logout! hehehehehe", error: error });
   }
 });
 
